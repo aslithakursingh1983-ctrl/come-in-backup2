@@ -54,7 +54,7 @@ export default function HomeScreen() {
       <StatusBar barStyle="dark-content" />
       {/* Sticky Header */}
       <LinearGradient
-        colors={["#ECFDF5", "#FFFFFF"]}
+        colors={["#DDEEE4", "#F4F6F1"]}
         style={[styles.header, { paddingTop: insets.top + spacing.sm }]}
       >
         <View style={styles.topRow}>
@@ -107,7 +107,7 @@ export default function HomeScreen() {
               contentFit="cover"
             />
             <LinearGradient
-              colors={["rgba(16,185,129,0.85)", "rgba(16,185,129,0.5)"]}
+              colors={["rgba(4,120,87,0.88)", "rgba(4,120,87,0.6)"]}
               style={StyleSheet.absoluteFill}
             />
             <View style={styles.heroContent}>

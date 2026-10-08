@@ -5,41 +5,53 @@ import { Appearance, StyleSheet, useColorScheme } from "react-native";
 export type ColorScheme = "light" | "dark";
 
 const light = {
-  // Surfaces
-  surface: "#FFFFFF",
-  onSurface: "#111827",
-  surfaceSecondary: "#F9FAFB",
-  onSurfaceSecondary: "#374151",
-  surfaceTertiary: "#F3F4F6",
-  onSurfaceTertiary: "#4B5563",
-  surfaceInverse: "#111827",
-  onSurfaceInverse: "#FFFFFF",
-  muted: "#6B7280",
+  // ---------------------------------------------------------------------------
+  // Surfaces — slightly darker premium LIGHT theme. Warm off-white canvas,
+  // deeper neutral cards, deeper fills for inputs/chips. Still bright and
+  // readable, never dark mode.
+  // ---------------------------------------------------------------------------
+  surface: "#F4F6F1",            // app canvas — soft warm off-white
+  onSurface: "#0F1A14",          // near-black with a green tint
+  surfaceSecondary: "#EAEDE5",   // cards / section backgrounds
+  onSurfaceSecondary: "#2F3A33",
+  surfaceTertiary: "#DFE3DA",    // input / chip fills, deepest nesting
+  onSurfaceTertiary: "#4A5248",
+  surfaceInverse: "#0F1A14",     // tooltips, snackbars popping off the canvas
+  onSurfaceInverse: "#F4F6F1",
+  muted: "#687065",              // captions, timestamps, placeholders
 
-  // Brand (mint green)
-  brand: "#10B981",
+  // ---------------------------------------------------------------------------
+  // Brand — rich, deep Come In green with a golden yellow accent for the
+  // selective "door" moments. brandTertiary is a deeper mint tint for pills
+  // and savings chips, consistent with the darker canvas.
+  // ---------------------------------------------------------------------------
+  brand: "#047857",
   onBrand: "#FFFFFF",
-  brandPrimary: "#10B981",
+  brandPrimary: "#047857",
   onBrandPrimary: "#FFFFFF",
-  brandSecondary: "#FBBF24",
-  onBrandSecondary: "#111827",
-  brandTertiary: "#D1FAE5",
-  onBrandTertiary: "#064E3B",
+  brandSecondary: "#F0B429",
+  onBrandSecondary: "#1A1308",
+  brandTertiary: "#CDE4D9",
+  onBrandTertiary: "#053F2E",
 
+  // ---------------------------------------------------------------------------
   // Status
-  success: "#10B981",
+  // ---------------------------------------------------------------------------
+  success: "#047857",
   onSuccess: "#FFFFFF",
-  warning: "#F59E0B",
+  warning: "#B45309",
   onWarning: "#FFFFFF",
-  error: "#EF4444",
+  error: "#B91C1C",
   onError: "#FFFFFF",
-  info: "#4B5563",
+  info: "#334155",
   onInfo: "#FFFFFF",
 
+  // ---------------------------------------------------------------------------
   // Lines
-  border: "#E5E7EB",
-  borderStrong: "#D1D5DB",
-  divider: "#F3F4F6",
+  // ---------------------------------------------------------------------------
+  border: "#D2D7CC",
+  borderStrong: "#BBC2B5",
+  divider: "#E0E4DB",
 };
 
 export type ThemeColors = typeof light;
