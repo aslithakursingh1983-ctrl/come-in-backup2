@@ -6,52 +6,50 @@ export type ColorScheme = "light" | "dark";
 
 const light = {
   // ---------------------------------------------------------------------------
-  // Surfaces — slightly darker premium LIGHT theme. Warm off-white canvas,
-  // deeper neutral cards, deeper fills for inputs/chips. Still bright and
-  // readable, never dark mode.
+  // Surfaces — "paper" premium LIGHT theme. Noticeably deeper off-white /
+  // light-grey canvas, deeper neutral section cards, deeper fills for
+  // inputs/chips. Still a light theme — never black, never dark mode.
   // ---------------------------------------------------------------------------
-  surface: "#F4F6F1",            // app canvas — soft warm off-white
-  onSurface: "#0F1A14",          // near-black with a green tint
-  surfaceSecondary: "#EAEDE5",   // cards / section backgrounds
-  onSurfaceSecondary: "#2F3A33",
-  surfaceTertiary: "#DFE3DA",    // input / chip fills, deepest nesting
-  onSurfaceTertiary: "#4A5248",
-  surfaceInverse: "#0F1A14",     // tooltips, snackbars popping off the canvas
-  onSurfaceInverse: "#F4F6F1",
-  muted: "#687065",              // captions, timestamps, placeholders
+  surface: "#E8ECE2",            // app canvas — soft paper, perceptibly darker
+  onSurface: "#0A1612",          // deep green-charcoal text
+  surfaceSecondary: "#D6DCCB",   // cards / section backgrounds
+  onSurfaceSecondary: "#263028",
+  surfaceTertiary: "#C5CDB6",    // inputs / chips, deepest nesting
+  onSurfaceTertiary: "#3C463A",
+  surfaceInverse: "#0A1612",     // tooltips, snackbars popping off the canvas
+  onSurfaceInverse: "#E8ECE2",
+  muted: "#5B6456",              // captions, timestamps, placeholders
 
   // ---------------------------------------------------------------------------
-  // Brand — rich, deep Come In green with a golden yellow accent for the
-  // selective "door" moments. brandTertiary is a deeper mint tint for pills
-  // and savings chips, consistent with the darker canvas.
+  // Brand — rich deep Come In green with a golden-yellow door accent.
   // ---------------------------------------------------------------------------
-  brand: "#047857",
+  brand: "#036C4E",
   onBrand: "#FFFFFF",
-  brandPrimary: "#047857",
+  brandPrimary: "#036C4E",
   onBrandPrimary: "#FFFFFF",
-  brandSecondary: "#F0B429",
+  brandSecondary: "#EAB22A",
   onBrandSecondary: "#1A1308",
-  brandTertiary: "#CDE4D9",
+  brandTertiary: "#BDD6C8",
   onBrandTertiary: "#053F2E",
 
   // ---------------------------------------------------------------------------
   // Status
   // ---------------------------------------------------------------------------
-  success: "#047857",
+  success: "#036C4E",
   onSuccess: "#FFFFFF",
-  warning: "#B45309",
+  warning: "#9A5A08",
   onWarning: "#FFFFFF",
-  error: "#B91C1C",
+  error: "#A51818",
   onError: "#FFFFFF",
-  info: "#334155",
+  info: "#2A3B3F",
   onInfo: "#FFFFFF",
 
   // ---------------------------------------------------------------------------
   // Lines
   // ---------------------------------------------------------------------------
-  border: "#D2D7CC",
-  borderStrong: "#BBC2B5",
-  divider: "#E0E4DB",
+  border: "#B8C0AE",
+  borderStrong: "#A0A896",
+  divider: "#C5CDB6",
 };
 
 export type ThemeColors = typeof light;

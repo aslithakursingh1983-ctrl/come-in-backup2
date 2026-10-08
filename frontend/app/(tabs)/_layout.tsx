@@ -3,6 +3,7 @@ import { Tabs } from "expo-router";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import { ColorValue, Platform, StyleSheet, Text, View } from "react-native";
 
+import { useT } from "@/src/i18n";
 import { usesNativeTabs } from "@/src/navigation";
 import { useCart } from "@/src/store/cart";
 import { colors } from "@/src/theme";
@@ -46,29 +47,30 @@ function CartNativeTabBadge() {
 }
 
 export default function TabsLayout() {
+  const { t } = useT();
   if (usesNativeTabs) {
     return (
       <NativeTabs>
         <NativeTabs.Trigger name="index">
           <NativeTabs.Trigger.Icon sf="house.fill" />
-          <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Label>{t("tab.home")}</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="categories">
           <NativeTabs.Trigger.Icon sf="square.grid.2x2.fill" />
-          <NativeTabs.Trigger.Label>Categories</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Label>{t("tab.categories")}</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="search" role="search">
           <NativeTabs.Trigger.Icon sf="magnifyingglass" />
-          <NativeTabs.Trigger.Label>Search</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Label>{t("tab.search")}</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="cart">
           <NativeTabs.Trigger.Icon sf="bag.fill" />
-          <NativeTabs.Trigger.Label>Cart</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Label>{t("tab.cart")}</NativeTabs.Trigger.Label>
           <CartNativeTabBadge />
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="account">
           <NativeTabs.Trigger.Icon sf="person.fill" />
-          <NativeTabs.Trigger.Label>Account</NativeTabs.Trigger.Label>
+          <NativeTabs.Trigger.Label>{t("tab.account")}</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
       </NativeTabs>
     );
@@ -97,7 +99,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: t("tab.home"),
           tabBarIcon: ({ color, focused }) => (
             <TabIcon name="home" color={color} focused={focused} />
           ),
@@ -106,7 +108,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="categories"
         options={{
-          title: "Categories",
+          title: t("tab.categories"),
           tabBarIcon: ({ color, focused }) => (
             <TabIcon name="grid" color={color} focused={focused} />
           ),
@@ -115,7 +117,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="search"
         options={{
-          title: "Search",
+          title: t("tab.search"),
           tabBarIcon: ({ color, focused }) => (
             <TabIcon name="search" color={color} focused={focused} />
           ),
@@ -124,14 +126,14 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="cart"
         options={{
-          title: "Cart",
+          title: t("tab.cart"),
           tabBarIcon: ({ color, focused }) => <CartTabIcon color={color} focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="account"
         options={{
-          title: "Account",
+          title: t("tab.account"),
           tabBarIcon: ({ color, focused }) => (
             <TabIcon name="user" color={color} focused={focused} />
           ),

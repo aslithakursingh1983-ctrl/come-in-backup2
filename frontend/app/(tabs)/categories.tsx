@@ -5,6 +5,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { CATEGORIES } from "@/src/data/catalog";
+import { useT } from "@/src/i18n";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
 
 export default function CategoriesScreen() {
@@ -12,18 +13,19 @@ export default function CategoriesScreen() {
   const router = useRouter();
   const styles = useStyles();
   const { colors } = useTheme();
+  const { t } = useT();
 
   return (
     <View style={styles.root}>
       <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
-        <Text style={styles.title}>All categories</Text>
+        <Text style={styles.title}>{t("categories.title")}</Text>
         <Pressable
           testID="header-services-btn"
           onPress={() => router.push("/services")}
           style={styles.servicesPill}
         >
           <Feather name="tool" size={14} color={colors.brandPrimary} />
-          <Text style={styles.servicesPillText}>Home Services</Text>
+          <Text style={styles.servicesPillText}>{t("categories.servicesPill")}</Text>
         </Pressable>
       </View>
       <FlatList

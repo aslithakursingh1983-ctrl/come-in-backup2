@@ -24,6 +24,7 @@ import {
   QUICK_DELIVERY_PRODUCTS,
   SERVICES,
 } from "@/src/data/catalog";
+import { useT } from "@/src/i18n";
 import { useLocationCtx } from "@/src/store/location";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
 
@@ -35,6 +36,7 @@ export default function HomeScreen() {
   const styles = useStyles();
   const { colors } = useTheme();
   const { location, setLocation } = useLocationCtx();
+  const { t } = useT();
   const [locModalOpen, setLocModalOpen] = useState(false);
   const [locInput, setLocInput] = useState(
     location === DEFAULT_LOCATION ? "" : location,
@@ -54,7 +56,7 @@ export default function HomeScreen() {
       <StatusBar barStyle="dark-content" />
       {/* Sticky Header */}
       <LinearGradient
-        colors={["#DDEEE4", "#F4F6F1"]}
+        colors={["#C7D9CB", "#E8ECE2"]}
         style={[styles.header, { paddingTop: insets.top + spacing.sm }]}
       >
         <View style={styles.topRow}>
@@ -66,7 +68,7 @@ export default function HomeScreen() {
               <Text testID="brand-logo" style={styles.brand}>
                 Come In
               </Text>
-              <Text style={styles.tagline}>your town, at your door.</Text>
+              <Text style={styles.tagline}>{t("brand.tagline")}</Text>
             </View>
           </View>
         </View>
@@ -77,9 +79,9 @@ export default function HomeScreen() {
         >
           <Feather name="map-pin" size={16} color={colors.brandPrimary} />
           <View style={{ flex: 1 }}>
-            <Text style={styles.locLabel}>Deliver to</Text>
+            <Text style={styles.locLabel}>{t("home.deliverTo")}</Text>
             <Text style={styles.locValue} numberOfLines={1}>
-              {location}
+              {location === DEFAULT_LOCATION ? t("home.setLocation") : location}
             </Text>
           </View>
           <Feather name="chevron-down" size={18} color={colors.onSurfaceSecondary} />
@@ -90,7 +92,7 @@ export default function HomeScreen() {
           style={styles.searchBar}
         >
           <Feather name="search" size={18} color={colors.muted} />
-          <Text style={styles.searchPlaceholder}>Search for atta, dal, milk & more</Text>
+          <Text style={styles.searchPlaceholder}>{t("home.searchPlaceholder")}</Text>
         </Pressable>
       </LinearGradient>
 
@@ -107,17 +109,17 @@ export default function HomeScreen() {
               contentFit="cover"
             />
             <LinearGradient
-              colors={["rgba(4,120,87,0.88)", "rgba(4,120,87,0.6)"]}
+              colors={["rgba(3,108,78,0.9)", "rgba(3,108,78,0.65)"]}
               style={StyleSheet.absoluteFill}
             />
             <View style={styles.heroContent}>
               <View style={styles.heroPill}>
-                <Text style={styles.heroPillText}>LIMITED TIME</Text>
+                <Text style={styles.heroPillText}>{t("home.limitedTime")}</Text>
               </View>
-              <Text style={styles.heroTitle}>Fresh picks{"\n"}in 15 minutes</Text>
-              <Text style={styles.heroSub}>Up to 40% off groceries today</Text>
+              <Text style={styles.heroTitle}>{t("home.heroTitle")}</Text>
+              <Text style={styles.heroSub}>{t("home.heroSub")}</Text>
               <View style={styles.heroCta}>
-                <Text style={styles.heroCtaText}>Shop now</Text>
+                <Text style={styles.heroCtaText}>{t("home.shopNow")}</Text>
                 <Feather name="arrow-right" size={14} color={colors.brandPrimary} />
               </View>
             </View>
@@ -125,7 +127,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Grocery Categories */}
-        <SectionHeader title="Shop by category" onSeeAll={() => router.push("/(tabs)/categories")} />
+        <SectionHeader title={t("home.shopByCategory")} onSeeAll={() => router.push("/(tabs)/categories")} />
         <FlatList
           data={CATEGORIES}
           keyExtractor={(c) => c.id}
@@ -150,9 +152,9 @@ export default function HomeScreen() {
         <View style={styles.quickHeader}>
           <View style={styles.quickBadge}>
             <Feather name="zap" size={12} color={colors.onBrandSecondary} />
-            <Text style={styles.quickBadgeText}>10 MIN</Text>
+            <Text style={styles.quickBadgeText}>{t("home.minBadge")}</Text>
           </View>
-          <Text style={styles.quickTitle}>Quick delivery essentials</Text>
+          <Text style={styles.quickTitle}>{t("home.quickDelivery")}</Text>
         </View>
         <FlatList
           data={QUICK_DELIVERY_PRODUCTS}
@@ -164,7 +166,7 @@ export default function HomeScreen() {
         />
 
         {/* Popular Products */}
-        <SectionHeader title="Popular this week" onSeeAll={() => router.push("/(tabs)/categories")} />
+        <SectionHeader title={t("home.popular")} onSeeAll={() => router.push("/(tabs)/categories")} />
         <View style={styles.popularGrid}>
           {POPULAR_PRODUCTS.map((p) => (
             <View key={p.id} style={styles.gridItem}>
@@ -174,7 +176,7 @@ export default function HomeScreen() {
         </View>
 
         {/* Home Services */}
-        <SectionHeader title="Home services" onSeeAll={() => router.push("/services")} />
+        <SectionHeader title={t("home.homeServices")} onSeeAll={() => router.push("/services")} />
         <FlatList
           data={SERVICES.slice(0, 4)}
           keyExtractor={(s) => s.id}
@@ -213,9 +215,9 @@ export default function HomeScreen() {
                 <Feather name="package" size={22} color={colors.onBrandPrimary} />
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.requestTitle}>Request anything</Text>
+                <Text style={styles.requestTitle}>{t("home.requestAnything")}</Text>
                 <Text style={styles.requestSub}>
-                  Pickup, drop or a custom errand. Just tell us what you need.
+                  {t("home.requestAnythingSub")}
                 </Text>
               </View>
             </View>
@@ -234,13 +236,13 @@ export default function HomeScreen() {
         <Pressable style={styles.modalBackdrop} onPress={() => setLocModalOpen(false)} />
         <View style={[styles.modalSheet, { paddingBottom: insets.bottom + spacing.lg }]}>
           <View style={styles.modalHandle} />
-          <Text style={styles.modalTitle}>Where should we deliver?</Text>
-          <Text style={styles.modalSub}>Type your area, city or any landmark</Text>
+          <Text style={styles.modalTitle}>{t("home.whereDeliver")}</Text>
+          <Text style={styles.modalSub}>{t("home.whereDeliverSub")}</Text>
           <TextInput
             testID="location-input"
             value={locInput}
             onChangeText={setLocInput}
-            placeholder="e.g. Sector 17, Chandigarh"
+            placeholder={t("home.locationExample")}
             placeholderTextColor={colors.muted}
             style={styles.modalInput}
             autoFocus
@@ -253,7 +255,7 @@ export default function HomeScreen() {
             }}
             style={styles.modalBtn}
           >
-            <Text style={styles.modalBtnText}>Save location</Text>
+            <Text style={styles.modalBtnText}>{t("home.saveLocation")}</Text>
           </Pressable>
         </View>
       </Modal>

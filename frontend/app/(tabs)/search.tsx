@@ -15,6 +15,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ProductCard } from "@/src/components/ProductCard";
 import { PRODUCTS, searchProducts } from "@/src/data/catalog";
+import { useT } from "@/src/i18n";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
 
 const SUGGESTIONS = ["Milk", "Atta", "Salt", "Butter", "Bread", "Oil", "Rice", "Apple"];
@@ -23,6 +24,7 @@ export default function SearchScreen() {
   const insets = useSafeAreaInsets();
   const styles = useStyles();
   const { colors } = useTheme();
+  const { t } = useT();
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => searchProducts(query), [query]);
@@ -40,7 +42,7 @@ export default function SearchScreen() {
             testID="search-input"
             value={query}
             onChangeText={setQuery}
-            placeholder="Search for products, brands…"
+            placeholder={t("search.placeholder")}
             placeholderTextColor={colors.muted}
             style={styles.input}
             autoFocus
@@ -56,7 +58,7 @@ export default function SearchScreen() {
 
       {!hasQuery ? (
         <View style={styles.emptyContent}>
-          <Text style={styles.sectionTitle}>Popular searches</Text>
+          <Text style={styles.sectionTitle}>{t("search.popular")}</Text>
           <View style={styles.chipRow}>
             {SUGGESTIONS.map((s) => (
               <Pressable
@@ -70,7 +72,7 @@ export default function SearchScreen() {
               </Pressable>
             ))}
           </View>
-          <Text style={[styles.sectionTitle, { marginTop: spacing.xl }]}>You may like</Text>
+          <Text style={[styles.sectionTitle, { marginTop: spacing.xl }]}>{t("search.youMayLike")}</Text>
           <View style={styles.grid}>
             {PRODUCTS.slice(0, 6).map((p) => (
               <View key={p.id} style={styles.gridItem}>
@@ -84,8 +86,8 @@ export default function SearchScreen() {
           <View style={styles.noResultsIcon}>
             <Feather name="search" size={30} color={colors.muted} />
           </View>
-          <Text style={styles.noResultsTitle}>No results for "{query}"</Text>
-          <Text style={styles.noResultsSub}>Try a different search term or browse categories.</Text>
+          <Text style={styles.noResultsTitle}>{t("search.noResults", { q: query })}</Text>
+          <Text style={styles.noResultsSub}>{t("search.noResultsSub")}</Text>
         </View>
       ) : (
         <FlatList

@@ -5,9 +5,13 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { QuantityStepper } from "@/src/components/QuantityStepper";
+import { useT } from "@/src/i18n";
 import { useCart } from "@/src/store/cart";
 import { useLocationCtx } from "@/src/store/location";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
+
+const DEFAULT_LOCATION = "Set delivery location";
+const DELIVERY_FEE_THRESHOLD = 199;
 
 export default function CartScreen() {
   const insets = useSafeAreaInsets();
@@ -17,25 +21,26 @@ export default function CartScreen() {
   const { cartLines, subtotal, deliveryFee, total, increment, decrement, remove, clear } =
     useCart();
   const { location } = useLocationCtx();
+  const { t } = useT();
 
   if (cartLines.length === 0) {
     return (
       <View style={styles.root}>
         <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
-          <Text style={styles.title}>Your cart</Text>
+          <Text style={styles.title}>{t("cart.title")}</Text>
         </View>
         <View style={styles.emptyWrap}>
           <View style={styles.emptyIcon}>
             <Feather name="shopping-bag" size={34} color={colors.brandPrimary} />
           </View>
-          <Text style={styles.emptyTitle}>Your cart is empty</Text>
-          <Text style={styles.emptySub}>Add fresh picks from the home screen to get started.</Text>
+          <Text style={styles.emptyTitle}>{t("cart.empty")}</Text>
+          <Text style={styles.emptySub}>{t("cart.emptySub")}</Text>
           <Pressable
             testID="start-shopping-btn"
             onPress={() => router.replace("/(tabs)")}
             style={styles.emptyBtn}
           >
-            <Text style={styles.emptyBtnText}>Start shopping</Text>
+            <Text style={styles.emptyBtnText}>{t("cart.startShopping")}</Text>
           </Pressable>
         </View>
       </View>
@@ -50,9 +55,9 @@ export default function CartScreen() {
   return (
     <View style={styles.root}>
       <View style={[styles.header, { paddingTop: insets.top + spacing.sm }]}>
-        <Text style={styles.title}>Your cart</Text>
+        <Text style={styles.title}>{t("cart.title")}</Text>
         <Pressable testID="clear-cart-btn" onPress={clear} hitSlop={10}>
-          <Text style={[styles.clearText, { color: colors.error }]}>Clear</Text>
+          <Text style={[styles.clearText, { color: colors.error }]}>{t("cart.clear")}</Text>
         </Pressable>
       </View>
 
@@ -63,9 +68,9 @@ export default function CartScreen() {
         <View style={styles.deliveryCard}>
           <Feather name="clock" size={18} color={colors.brandPrimary} />
           <View style={{ flex: 1 }}>
-            <Text style={styles.deliveryTitle}>Delivery in 10-15 mins</Text>
+            <Text style={styles.deliveryTitle}>{t("cart.deliveryIn")}</Text>
             <Text style={styles.deliveryTo} numberOfLines={1}>
-              to {location}
+              {t("cart.to", { loc: location === DEFAULT_LOCATION ? t("home.setLocation") : location })}
             </Text>
           </View>
         </View>
@@ -73,11 +78,13 @@ export default function CartScreen() {
         {savings > 0 && (
           <View style={styles.savingBanner}>
             <Feather name="tag" size={14} color={colors.onBrandSecondary} />
-            <Text style={styles.savingText}>You're saving ₹{savings} on this order</Text>
+            <Text style={styles.savingText}>{t("cart.savings", { n: savings })}</Text>
           </View>
         )}
 
-        <Text style={styles.sectionLabel}>{cartLines.length} ITEM{cartLines.length === 1 ? "" : "S"}</Text>
+        <Text style={styles.sectionLabel}>
+          {t(cartLines.length === 1 ? "cart.item" : "cart.items", { n: cartLines.length })}
+        </Text>
         <View style={styles.card}>
           {cartLines.map((line, idx) => (
             <View key={line.product.id}>
@@ -112,20 +119,20 @@ export default function CartScreen() {
           ))}
         </View>
 
-        <Text style={styles.sectionLabel}>BILL DETAILS</Text>
+        <Text style={styles.sectionLabel}>{t("cart.billDetails")}</Text>
         <View style={styles.billCard}>
-          <BillRow label="Item total" value={`₹${subtotal}`} />
+          <BillRow label={t("cart.itemTotal")} value={`₹${subtotal}`} />
           <BillRow
-            label="Delivery fee"
-            value={deliveryFee === 0 ? "FREE" : `₹${deliveryFee}`}
+            label={t("cart.deliveryFee")}
+            value={deliveryFee === 0 ? t("cart.free") : `₹${deliveryFee}`}
             highlight={deliveryFee === 0}
           />
           <View style={styles.divider} />
-          <BillRow label="To pay" value={`₹${total}`} bold />
+          <BillRow label={t("cart.toPay")} value={`₹${total}`} bold />
         </View>
         {deliveryFee > 0 && (
           <Text style={styles.hint}>
-            Add ₹{199 - subtotal} more to unlock FREE delivery
+            {t("cart.hint", { n: DELIVERY_FEE_THRESHOLD - subtotal })}
           </Text>
         )}
       </ScrollView>
@@ -135,10 +142,10 @@ export default function CartScreen() {
       >
         <View style={{ flex: 1 }}>
           <Text style={styles.checkoutTotal}>₹{total}</Text>
-          <Text style={styles.checkoutLabel}>TOTAL</Text>
+          <Text style={styles.checkoutLabel}>{t("cart.total")}</Text>
         </View>
         <Pressable testID="checkout-btn" style={styles.checkoutBtn}>
-          <Text style={styles.checkoutBtnText}>Proceed to checkout</Text>
+          <Text style={styles.checkoutBtnText}>{t("cart.checkout")}</Text>
           <Feather name="arrow-right" size={18} color={colors.onBrandPrimary} />
         </Pressable>
       </View>

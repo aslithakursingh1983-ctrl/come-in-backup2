@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useT } from "@/src/i18n";
 import { useCart } from "@/src/store/cart";
 import { useLocationCtx } from "@/src/store/location";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
@@ -22,41 +23,51 @@ export default function AccountScreen() {
   const { colors } = useTheme();
   const { totalCount } = useCart();
   const { location } = useLocationCtx();
+  const { t, current } = useT();
   const [signInOpen, setSignInOpen] = useState(false);
 
   const groups: { title: string; rows: Row[] }[] = [
     {
-      title: "Your shopping",
+      title: t("account.yourShopping"),
       rows: [
         {
           icon: "shopping-bag",
-          label: "Cart",
-          hint: totalCount > 0 ? `${totalCount} item${totalCount === 1 ? "" : "s"}` : "Empty",
+          label: t("account.cart"),
+          hint:
+            totalCount > 0
+              ? t(totalCount === 1 ? "account.cartItem" : "account.cartItems", { n: totalCount })
+              : t("account.empty"),
           onPress: () => router.push("/(tabs)/cart"),
         },
-        { icon: "clock", label: "Past orders", hint: "No orders yet" },
-        { icon: "heart", label: "Saved items" },
+        { icon: "clock", label: t("account.pastOrders"), hint: t("account.noOrders") },
+        { icon: "heart", label: t("account.savedItems") },
       ],
     },
     {
-      title: "Delivery",
+      title: t("account.delivery"),
       rows: [
         {
           icon: "map-pin",
-          label: "Delivery address",
-          hint: location,
+          label: t("account.deliveryAddress"),
+          hint: location === "Set delivery location" ? t("home.setLocation") : location,
           onPress: () => router.push("/delivery-address"),
         },
-        { icon: "package", label: "Request anything", onPress: () => router.push("/request") },
-        { icon: "tool", label: "Home services", onPress: () => router.push("/services") },
+        { icon: "package", label: t("account.requestAnything"), onPress: () => router.push("/request") },
+        { icon: "tool", label: t("account.homeServices"), onPress: () => router.push("/services") },
       ],
     },
     {
-      title: "Preferences",
+      title: t("account.preferences"),
       rows: [
-        { icon: "bell", label: "Notifications" },
-        { icon: "credit-card", label: "Payment methods" },
-        { icon: "help-circle", label: "Help & support" },
+        {
+          icon: "globe",
+          label: t("account.language"),
+          hint: current.nativeName,
+          onPress: () => router.push("/language"),
+        },
+        { icon: "bell", label: t("account.notifications") },
+        { icon: "credit-card", label: t("account.paymentMethods") },
+        { icon: "help-circle", label: t("account.help") },
       ],
     },
   ];
@@ -73,15 +84,15 @@ export default function AccountScreen() {
           <Text style={styles.avatarText}>G</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text style={styles.name}>Hi there, Guest</Text>
-          <Text style={styles.sub}>Sign in to track orders and saved addresses</Text>
+          <Text style={styles.name}>{t("account.hi")}</Text>
+          <Text style={styles.sub}>{t("account.signInSub")}</Text>
         </View>
         <Pressable
           testID="account-signin-btn"
           onPress={() => setSignInOpen(true)}
           style={styles.signInBtn}
         >
-          <Text style={styles.signInText}>Sign in</Text>
+          <Text style={styles.signInText}>{t("account.signIn")}</Text>
         </Pressable>
       </View>
 
@@ -120,8 +131,8 @@ export default function AccountScreen() {
 
       <View style={styles.brandFooter}>
         <Text style={styles.brandFooterTitle}>Come In</Text>
-        <Text style={styles.brandFooterSub}>your town, at your door.</Text>
-        <Text style={styles.version}>v1.0 • Demo</Text>
+        <Text style={styles.brandFooterSub}>{t("brand.tagline")}</Text>
+        <Text style={styles.version}>{t("account.version")}</Text>
       </View>
     </ScrollView>
 
@@ -136,16 +147,16 @@ export default function AccountScreen() {
             <View style={styles.signInIcon}>
               <Feather name="user" size={28} color={colors.onBrandPrimary} />
             </View>
-            <Text style={styles.signInTitle}>Sign in coming soon</Text>
+            <Text style={styles.signInTitle}>{t("account.signInComingSoon")}</Text>
             <Text style={styles.signInSub}>
-              Accounts, order history and saved addresses will be unlocked in the next update.
+              {t("account.signInComingSoonSub")}
             </Text>
             <Pressable
               testID="signin-close-btn"
               onPress={() => setSignInOpen(false)}
               style={styles.signInCloseBtn}
             >
-              <Text style={styles.signInCloseText}>Got it</Text>
+              <Text style={styles.signInCloseText}>{t("account.gotIt")}</Text>
             </Pressable>
           </View>
         </Pressable>
