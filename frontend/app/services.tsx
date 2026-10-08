@@ -80,7 +80,7 @@ export default function ServicesScreen() {
         onRequestClose={() => setBookedTitle(null)}
       >
         <Pressable style={styles.backdrop} onPress={() => setBookedTitle(null)}>
-          <Pressable style={styles.toast} onPress={(e) => e.stopPropagation()}>
+          <Pressable style={styles.toast}>
             <View style={styles.toastIcon}>
               <Feather name="check" size={24} color={colors.onBrandPrimary} />
             </View>

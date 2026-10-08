@@ -220,7 +220,7 @@ export const PRODUCTS: Product[] = [
     unit: "52 g",
     price: 20,
     image:
-      "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
+      "https://images.unsplash.com/photo-1613919113640-25732ec5e61f?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     categoryId: "snacks",
     description: "Crispy potato chips with a perfect pinch of salt.",
   },
@@ -277,7 +277,7 @@ export const PRODUCTS: Product[] = [
     unit: "250 g",
     price: 25,
     image:
-      "https://images.unsplash.com/photo-1583947215259-38e31be8751f?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
+      "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     categoryId: "household",
     description: "Tough on grease, gentle on hands.",
   },
@@ -311,7 +311,7 @@ export const PRODUCTS: Product[] = [
     price: 160,
     mrp: 180,
     image:
-      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
+      "https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?crop=entropy&cs=srgb&fm=jpg&w=600&q=80",
     categoryId: "masalas-oils",
     description: "Light, healthy, and rich in Vitamin A, D & E.",
   },

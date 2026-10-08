@@ -359,7 +359,7 @@ const useStyles = makeStyles((colors) => ({
   heroTitle: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#FFFFFF",
+    color: colors.onBrandPrimary,
     lineHeight: 28,
     marginTop: spacing.xs,
   },
@@ -373,7 +373,7 @@ const useStyles = makeStyles((colors) => ({
     flexDirection: "row",
     alignItems: "center",
     gap: spacing.xs,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.surface,
     paddingHorizontal: spacing.md,
     paddingVertical: 8,
     borderRadius: radius.pill,
@@ -506,7 +506,11 @@ const useStyles = makeStyles((colors) => ({
 
   // Modal
   modalBackdrop: {
-    ...StyleSheet.absoluteFillObject,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: "rgba(0,0,0,0.4)",
   },
   modalSheet: {

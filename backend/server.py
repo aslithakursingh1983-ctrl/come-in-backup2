@@ -8,7 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel, Field
 from typing import List
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 ROOT_DIR = Path(__file__).parent
@@ -30,7 +30,7 @@ api_router = APIRouter(prefix="/api")
 class StatusCheck(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class StatusCheckCreate(BaseModel):
     client_name: str
@@ -55,10 +55,27 @@ async def get_status_checks():
 # Include the router in the main app
 app.include_router(api_router)
 
+# CORS configuration.
+# Browsers forbid combining `allow_origins=["*"]` with `allow_credentials=True`,
+# so we drive allowed origins from the environment. Comma-separated list in
+# CORS_ALLOW_ORIGINS; falls back to the Expo preview host from
+# EXPO_PACKAGER_PROXY_URL (if present) or just "*" for an un-credentialed
+# dev-only wildcard. Credentials are only enabled when a concrete, non-wildcard
+# origin list is provided.
+_raw_origins = os.environ.get("CORS_ALLOW_ORIGINS", "").strip()
+if _raw_origins:
+    _allow_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
+elif os.environ.get("EXPO_PACKAGER_PROXY_URL"):
+    _allow_origins = [os.environ["EXPO_PACKAGER_PROXY_URL"].rstrip("/")]
+else:
+    _allow_origins = ["*"]
+
+_allow_credentials = _allow_origins != ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=["*"],
+    allow_credentials=_allow_credentials,
+    allow_origins=_allow_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )

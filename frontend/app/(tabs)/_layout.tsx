@@ -1,9 +1,11 @@
 import Feather from "@react-native-vector-icons/feather";
 import { Tabs } from "expo-router";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { NativeTabs } from "expo-router/unstable-native-tabs";
+import { ColorValue, Platform, StyleSheet, Text, View } from "react-native";
 
+import { usesNativeTabs } from "@/src/navigation";
 import { useCart } from "@/src/store/cart";
-import { colors, spacing } from "@/src/theme";
+import { colors } from "@/src/theme";
 
 function TabIcon({
   name,
@@ -11,22 +13,22 @@ function TabIcon({
   focused,
 }: {
   name: React.ComponentProps<typeof Feather>["name"];
-  color: string;
+  color: ColorValue;
   focused: boolean;
 }) {
   return (
     <View style={styles.iconWrap}>
-      <Feather name={name} size={22} color={color} />
+      <Feather name={name} size={22} color={color as string} />
       {focused && <View style={styles.activeDot} />}
     </View>
   );
 }
 
-function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
+function CartTabIcon({ color, focused }: { color: ColorValue; focused: boolean }) {
   const { totalCount } = useCart();
   return (
     <View style={styles.iconWrap}>
-      <Feather name="shopping-bag" size={22} color={color} />
+      <Feather name="shopping-bag" size={22} color={color as string} />
       {totalCount > 0 && (
         <View style={styles.badge}>
           <Text style={styles.badgeText}>{totalCount > 99 ? "99+" : totalCount}</Text>
@@ -37,7 +39,41 @@ function CartTabIcon({ color, focused }: { color: string; focused: boolean }) {
   );
 }
 
+function CartNativeTabBadge() {
+  const { totalCount } = useCart();
+  if (totalCount <= 0) return null;
+  return <NativeTabs.Trigger.Badge>{totalCount > 99 ? "99+" : String(totalCount)}</NativeTabs.Trigger.Badge>;
+}
+
 export default function TabsLayout() {
+  if (usesNativeTabs) {
+    return (
+      <NativeTabs>
+        <NativeTabs.Trigger name="index">
+          <NativeTabs.Trigger.Icon sf="house.fill" />
+          <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="categories">
+          <NativeTabs.Trigger.Icon sf="square.grid.2x2.fill" />
+          <NativeTabs.Trigger.Label>Categories</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="search" role="search">
+          <NativeTabs.Trigger.Icon sf="magnifyingglass" />
+          <NativeTabs.Trigger.Label>Search</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="cart">
+          <NativeTabs.Trigger.Icon sf="bag.fill" />
+          <NativeTabs.Trigger.Label>Cart</NativeTabs.Trigger.Label>
+          <CartNativeTabBadge />
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="account">
+          <NativeTabs.Trigger.Icon sf="person.fill" />
+          <NativeTabs.Trigger.Label>Account</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
+      </NativeTabs>
+    );
+  }
+
   return (
     <Tabs
       screenOptions={{

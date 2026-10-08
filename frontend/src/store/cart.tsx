@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, {
   createContext,
   useCallback,
@@ -9,6 +8,7 @@ import React, {
 } from "react";
 
 import { PRODUCTS, Product } from "@/src/data/catalog";
+import { storage } from "@/src/utils/storage";
 
 type CartState = Record<string, number>; // productId -> qty
 
@@ -40,8 +40,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     (async () => {
       try {
-        const raw = await AsyncStorage.getItem(STORAGE_KEY);
-        if (raw) setItems(JSON.parse(raw));
+        // Shared storage util JSON-encodes on write and JSON-decodes on read.
+        // We store the cart as a JSON string so it round-trips through the
+        // util's `StorageItemValue` (primitive) contract. On read we parse the
+        // inner JSON back into an object. We also accept a legacy raw-object
+        // shape if a previous build wrote directly through AsyncStorage.
+        const stored = (await storage.getItem<string>(STORAGE_KEY, "")) as
+          | string
+          | CartState
+          | null;
+        if (typeof stored === "string" && stored.length > 0) {
+          try {
+            setItems(JSON.parse(stored) as CartState);
+          } catch {}
+        } else if (stored && typeof stored === "object") {
+          setItems(stored as CartState);
+          // Migrate to the new string-wrapped format for consistency.
+          await storage.setItem(STORAGE_KEY, JSON.stringify(stored));
+        }
       } catch {}
       setHydrated(true);
     })();
@@ -49,7 +65,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(items)).catch(() => {});
+    storage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items, hydrated]);
 
   const getQty = useCallback((id: string) => items[id] ?? 0, [items]);
