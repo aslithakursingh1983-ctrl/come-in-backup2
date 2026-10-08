@@ -1,6 +1,7 @@
 import Feather from "@react-native-vector-icons/feather";
 import { useRouter } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useCart } from "@/src/store/cart";
@@ -21,6 +22,7 @@ export default function AccountScreen() {
   const { colors } = useTheme();
   const { totalCount } = useCart();
   const { location } = useLocationCtx();
+  const [signInOpen, setSignInOpen] = useState(false);
 
   const groups: { title: string; rows: Row[] }[] = [
     {
@@ -39,7 +41,12 @@ export default function AccountScreen() {
     {
       title: "Delivery",
       rows: [
-        { icon: "map-pin", label: "Delivery address", hint: location },
+        {
+          icon: "map-pin",
+          label: "Delivery address",
+          hint: location,
+          onPress: () => router.push("/delivery-address"),
+        },
         { icon: "package", label: "Request anything", onPress: () => router.push("/request") },
         { icon: "tool", label: "Home services", onPress: () => router.push("/services") },
       ],
@@ -55,11 +62,12 @@ export default function AccountScreen() {
   ];
 
   return (
-    <ScrollView
-      style={styles.root}
-      contentContainerStyle={{ paddingBottom: spacing.xxl }}
-      showsVerticalScrollIndicator={false}
-    >
+    <>
+      <ScrollView
+        style={styles.root}
+        contentContainerStyle={{ paddingBottom: spacing.xxl }}
+        showsVerticalScrollIndicator={false}
+      >
       <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
         <View style={styles.avatar}>
           <Text style={styles.avatarText}>G</Text>
@@ -68,7 +76,11 @@ export default function AccountScreen() {
           <Text style={styles.name}>Hi there, Guest</Text>
           <Text style={styles.sub}>Sign in to track orders and saved addresses</Text>
         </View>
-        <Pressable testID="account-signin-btn" style={styles.signInBtn}>
+        <Pressable
+          testID="account-signin-btn"
+          onPress={() => setSignInOpen(true)}
+          style={styles.signInBtn}
+        >
           <Text style={styles.signInText}>Sign in</Text>
         </Pressable>
       </View>
@@ -112,6 +124,33 @@ export default function AccountScreen() {
         <Text style={styles.version}>v1.0 • Demo</Text>
       </View>
     </ScrollView>
+
+      <Modal
+        visible={signInOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSignInOpen(false)}
+      >
+        <Pressable style={styles.signInBackdrop} onPress={() => setSignInOpen(false)}>
+          <View style={styles.signInSheet}>
+            <View style={styles.signInIcon}>
+              <Feather name="user" size={28} color={colors.onBrandPrimary} />
+            </View>
+            <Text style={styles.signInTitle}>Sign in coming soon</Text>
+            <Text style={styles.signInSub}>
+              Accounts, order history and saved addresses will be unlocked in the next update.
+            </Text>
+            <Pressable
+              testID="signin-close-btn"
+              onPress={() => setSignInOpen(false)}
+              style={styles.signInCloseBtn}
+            >
+              <Text style={styles.signInCloseText}>Got it</Text>
+            </Pressable>
+          </View>
+        </Pressable>
+      </Modal>
+    </>
   );
 }
 
@@ -189,4 +228,40 @@ const useStyles = makeStyles((colors) => ({
   brandFooterTitle: { fontSize: 20, fontWeight: "800", color: colors.brandPrimary },
   brandFooterSub: { fontSize: 12, color: colors.muted },
   version: { fontSize: 10, color: colors.muted, marginTop: spacing.sm },
+
+  signInBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: spacing.xl,
+  },
+  signInSheet: {
+    width: "100%",
+    maxWidth: 320,
+    backgroundColor: colors.surface,
+    padding: spacing.xl,
+    borderRadius: radius.lg,
+    alignItems: "center",
+    gap: spacing.sm,
+  },
+  signInIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: colors.brandPrimary,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.sm,
+  },
+  signInTitle: { fontSize: 17, fontWeight: "800", color: colors.onSurface },
+  signInSub: { fontSize: 13, color: colors.muted, textAlign: "center", lineHeight: 20 },
+  signInCloseBtn: {
+    marginTop: spacing.md,
+    backgroundColor: colors.brandPrimary,
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: 12,
+    borderRadius: radius.md,
+  },
+  signInCloseText: { color: colors.onBrandPrimary, fontWeight: "800" },
 }));

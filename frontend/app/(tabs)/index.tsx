@@ -2,7 +2,7 @@ import Feather from "@react-native-vector-icons/feather";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -27,6 +27,8 @@ import {
 import { useLocationCtx } from "@/src/store/location";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
 
+const DEFAULT_LOCATION = "Set delivery location";
+
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -35,8 +37,17 @@ export default function HomeScreen() {
   const { location, setLocation } = useLocationCtx();
   const [locModalOpen, setLocModalOpen] = useState(false);
   const [locInput, setLocInput] = useState(
-    location === "Set delivery location" ? "" : location,
+    location === DEFAULT_LOCATION ? "" : location,
   );
+
+  // Re-sync the modal input with the currently-saved location every time
+  // the modal is opened so stale text from a prior session isn't shown
+  // after the address was changed from Account / Request Anything.
+  useEffect(() => {
+    if (locModalOpen) {
+      setLocInput(location === DEFAULT_LOCATION ? "" : location);
+    }
+  }, [locModalOpen, location]);
 
   return (
     <View style={styles.root}>

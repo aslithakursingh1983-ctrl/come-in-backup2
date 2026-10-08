@@ -1,6 +1,6 @@
 import Feather from "@react-native-vector-icons/feather";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   KeyboardAvoidingView,
   Modal,
@@ -14,20 +14,37 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useLocationCtx } from "@/src/store/location";
 import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
 
 const SIZES = ["Small", "Medium", "Large"];
+const DEFAULT_LOCATION = "Set delivery location";
 
 export default function RequestScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const styles = useStyles();
   const { colors } = useTheme();
+  const { location } = useLocationCtx();
   const [pickup, setPickup] = useState("");
-  const [drop, setDrop] = useState("");
+  const [drop, setDrop] = useState(() =>
+    location && location !== DEFAULT_LOCATION ? location : "",
+  );
   const [desc, setDesc] = useState("");
   const [size, setSize] = useState("Small");
   const [submitted, setSubmitted] = useState(false);
+
+  // Keep drop in sync with the shared delivery address while the user hasn't
+  // typed a one-off override. We track the last-synced value so we only
+  // overwrite the field when it still matches the previously-saved address.
+  const lastSyncedRef = useRef(drop);
+  useEffect(() => {
+    if (!location || location === DEFAULT_LOCATION) return;
+    if (drop === "" || drop === lastSyncedRef.current) {
+      setDrop(location);
+      lastSyncedRef.current = location;
+    }
+  }, [location, drop]);
 
   const canSubmit = pickup.trim() && drop.trim() && desc.trim();
 
@@ -82,6 +99,19 @@ export default function RequestScreen() {
             style={styles.input}
           />
         </View>
+        <Pressable
+          testID="req-change-address-btn"
+          onPress={() => router.push("/delivery-address")}
+          hitSlop={8}
+          style={styles.changeAddressRow}
+        >
+          <Feather name="edit-2" size={11} color={colors.brandPrimary} />
+          <Text style={styles.changeAddressText}>
+            {location && location !== DEFAULT_LOCATION
+              ? `Using your saved address · Change`
+              : `Set your saved delivery address`}
+          </Text>
+        </Pressable>
 
         <Text style={styles.label}>What are we delivering?</Text>
         <View style={[styles.inputWrap, { alignItems: "flex-start" }]}>
@@ -230,6 +260,18 @@ const useStyles = makeStyles((colors) => ({
     paddingVertical: Platform.OS === "ios" ? 14 : 10,
   },
   input: { flex: 1, fontSize: 14, color: colors.onSurface, padding: 0 },
+  changeAddressRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
+    marginTop: 6,
+    paddingHorizontal: 2,
+  },
+  changeAddressText: {
+    fontSize: 11,
+    fontWeight: "700",
+    color: colors.brandPrimary,
+  },
   sizeRow: { flexDirection: "row", gap: spacing.sm },
   sizeChip: {
     flex: 1,
