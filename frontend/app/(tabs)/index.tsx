@@ -165,6 +165,30 @@ export default function HomeScreen() {
           ))}
         </View>
 
+        {/* Shops Near You */}
+        <SectionHeader
+          title={t("home.shops")}
+          onSeeAll={() => router.push("/shops")}
+        />
+        <View style={styles.requestWrap}>
+          <Pressable
+            testID="browse-shops-card"
+            onPress={() => router.push("/shops")}
+            style={styles.requestCard}
+          >
+            <View style={styles.requestLeft}>
+              <View style={styles.requestIcon}>
+                <Feather name="shopping-bag" size={22} color={colors.onBrandPrimary} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.requestTitle}>{t("home.browseShops")}</Text>
+                <Text style={styles.requestSub}>{t("home.shopsSub")}</Text>
+              </View>
+            </View>
+            <Feather name="arrow-right" size={20} color={colors.brandPrimary} />
+          </Pressable>
+        </View>
+
         {/* Home Services */}
         <SectionHeader title={t("home.homeServices")} onSeeAll={() => router.push("/services")} />
         <FlatList
@@ -279,9 +303,6 @@ const useStyles = makeStyles((colors) => ({
     borderBottomColor: colors.border,
   },
   topRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
     marginBottom: spacing.md,
   },
   logoWrap: {

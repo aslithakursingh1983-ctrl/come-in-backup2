@@ -54,6 +54,7 @@ export default function AccountScreen() {
           onPress: () => router.push("/delivery-address"),
         },
         { icon: "package", label: t("account.requestAnything"), onPress: () => router.push("/request") },
+        { icon: "shopping-bag", label: t("home.browseShops"), onPress: () => router.push("/shops") },
         { icon: "tool", label: t("account.homeServices"), onPress: () => router.push("/services") },
       ],
     },

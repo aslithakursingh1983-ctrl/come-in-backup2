@@ -101,7 +101,7 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
-## user_problem_statement: "Refresh existing Come In branding, logo assets, and UI theme without breaking routes, translations, or existing functionality."
+## user_problem_statement: "Replace the simplified Come In logo with the exact original supplied artwork (3D house entrance, yellow door, accent strokes, gradient wordmark, lowercase tagline, handwritten right text) across header, splash, and icons, without breaking existing functionality."
 ## backend:
 ##   - task: "Existing FastAPI startup"
 ##     implemented: true
@@ -120,11 +120,11 @@
 ## frontend:
 ##   - task: "Come In branding foundation"
 ##     implemented: true
-##     working: true
+##     working: "NA"
 ##     file: "frontend/src/components/BrandLogo.tsx"
 ##     stuck_count: 0
 ##     priority: "high"
-##     needs_retesting: false
+##     needs_retesting: true
 ##     status_history:
 ##       - working: "NA"
 ##         agent: "main"
@@ -152,3 +152,26 @@
 ##   - agent: "testing"
 ##     message: "Frontend branding testing COMPLETE and SUCCESSFUL. All requirements from review request verified: (1) Home loads with new Come In house/door mark, forest/leaf/yellow/warm-off-white palette, header, search/location controls, category/product sections ✓ (2) Account loads with branded mark and sign-in modal ✓ (3) Navigation to categories, search, product details, services, request-anything, delivery address, cart working ✓ (4) Location save persistence working ✓ (5) Request form flow working ✓ (6) Language screen can change language and persists after reload ✓ (7) Not-found route has branding and home navigation ✓ (8) No error fallback, broken layout, or console errors ✓. Mobile (390x844) and web (1920x1080) viewports tested successfully. Minor UI interaction issue on product details page Add button (fixed positioning makes it hard to click in test automation) but functionality works. Backend remains blocked but frontend is fully functional with local data. Ready for user acceptance."
 
+
+##   - agent: "main"
+##     message: "User requested a tighter reference-logo match. Updated the shared logo to use the refined C-shaped house entrance icon, exact title-case tagline, rounded wordmark treatment, and synchronized SVG/raster app assets. Live preview confirms the refined logo is visible; regression retest requested."
+##       - working: "NA"
+##         agent: "main"
+##         comment: "Original supplied artwork (IMG_4250.jpeg, 1179x393) integrated as assets/branding/come-in-logo-full.png. BrandLogo now renders the actual full horizontal artwork; BrandMark and icon/adaptive-icon/favicon use an exact square crop of the original house mark; splash uses the full artwork. Recreated shapes/text logo removed from the component. Tagline translation reverted to original lowercase. Live preview confirmed: Home header shows the real artwork at 186x62, undistorted."
+##       - working: true
+##         agent: "main"
+## frontend:
+##   - task: "Online + Offline Shops directory"
+##     implemented: true
+##     working: true
+##     file: "frontend/app/shops.tsx"
+##     stuck_count: 0
+##     priority: "high"
+##     needs_retesting: false
+##     status_history:
+##       - working: true
+##         agent: "main"
+##         comment: "Shipped frontend-only shops module: /app/data/shops.ts (6 demo shops typed online/offline/both, honest reserved-for-fiction phone numbers), /app/app/shops.tsx (All/Online/Offline tabs, name+product+area search, Open-now + Delivery filters, empty state), /app/app/shop/[id].tsx (hero, address, hours, services summary, Call Shop via expo-linking, product grid reusing ProductCard). Added home 'Shops near you' entry and Account row. New translation keys added to EN; other languages fall back automatically. Live test: 6 all / 3 online / 4 offline / 4 open-now, call button wired to tel:. BACKEND BLOCKED: shop CRUD, shopkeeper registration, admin approval, server-side authorization and MongoDB persistence not implemented because MONGO_URL/DB_NAME are still missing in protected env."
+##         comment: "Full original horizontal artwork now renders fluidly: width 100% with aspectRatio 3 and per-size maxWidth caps (sm 220 / md 320 / lg 340), contentFit contain, no fixed-height clipping. Verified live: mobile 390px shows 320x106.7 (ratio 3.0, fits with margins, no overlap with location/search), desktop 1920px shows identical ratio. Home topRow changed from flex-row to full-width container. BrandMark/icons unchanged (exact square crop of original mark)."
+##   - agent: "main"
+##     message: "Exact original logo artwork is now in the project and visible in the preview. Please regression-test branding visibility plus language switching, cart, navigation, and location persistence."

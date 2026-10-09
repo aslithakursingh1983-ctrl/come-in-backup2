@@ -1,4 +1,4 @@
-// Design tokens for Come In app. Mint green / white / sunshine yellow light theme.
+// Design tokens for Come In app. Forest green / warm paper / sunshine yellow light theme.
 import { useMemo } from "react";
 import { Appearance, StyleSheet, useColorScheme } from "react-native";
 
