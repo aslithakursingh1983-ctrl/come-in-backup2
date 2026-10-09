@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { BrandLogo, BrandMark } from "@/src/components/BrandLogo";
 import { useT } from "@/src/i18n";
 import { useCart } from "@/src/store/cart";
 import { useLocationCtx } from "@/src/store/location";
@@ -80,9 +81,7 @@ export default function AccountScreen() {
         showsVerticalScrollIndicator={false}
       >
       <View style={[styles.header, { paddingTop: insets.top + spacing.md }]}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText}>G</Text>
-        </View>
+        <BrandMark size={52} />
         <View style={{ flex: 1 }}>
           <Text style={styles.name}>{t("account.hi")}</Text>
           <Text style={styles.sub}>{t("account.signInSub")}</Text>
@@ -130,8 +129,7 @@ export default function AccountScreen() {
       ))}
 
       <View style={styles.brandFooter}>
-        <Text style={styles.brandFooterTitle}>Come In</Text>
-        <Text style={styles.brandFooterSub}>{t("brand.tagline")}</Text>
+        <BrandLogo size="sm" />
         <Text style={styles.version}>{t("account.version")}</Text>
       </View>
     </ScrollView>

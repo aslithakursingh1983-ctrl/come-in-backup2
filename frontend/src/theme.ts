@@ -6,50 +6,50 @@ export type ColorScheme = "light" | "dark";
 
 const light = {
   // ---------------------------------------------------------------------------
-  // Surfaces — "paper" premium LIGHT theme. Noticeably deeper off-white /
-  // light-grey canvas, deeper neutral section cards, deeper fills for
-  // inputs/chips. Still a light theme — never black, never dark mode.
+  // Surfaces — warm, welcoming paper with clean white cards.
   // ---------------------------------------------------------------------------
-  surface: "#E8ECE2",            // app canvas — soft paper, perceptibly darker
-  onSurface: "#0A1612",          // deep green-charcoal text
-  surfaceSecondary: "#D6DCCB",   // cards / section backgrounds
-  onSurfaceSecondary: "#263028",
-  surfaceTertiary: "#C5CDB6",    // inputs / chips, deepest nesting
-  onSurfaceTertiary: "#3C463A",
-  surfaceInverse: "#0A1612",     // tooltips, snackbars popping off the canvas
-  onSurfaceInverse: "#E8ECE2",
-  muted: "#5B6456",              // captions, timestamps, placeholders
+  surface: "#FFFDF8",
+  onSurface: "#173326",
+  surfaceSecondary: "#F6F7F0",
+  onSurfaceSecondary: "#33483B",
+  surfaceTertiary: "#EDF3E9",
+  onSurfaceTertiary: "#4D6254",
+  surfaceInverse: "#173326",
+  onSurfaceInverse: "#FFFDF8",
+  muted: "#66766B",
 
   // ---------------------------------------------------------------------------
-  // Brand — rich deep Come In green with a golden-yellow door accent.
+  // Brand — forest green foundation, leaf green actions, yellow door accent.
   // ---------------------------------------------------------------------------
-  brand: "#036C4E",
+  brand: "#173326",
+  brandForest: "#173326",
+  brandLeaf: "#2F8F4E",
   onBrand: "#FFFFFF",
-  brandPrimary: "#036C4E",
+  brandPrimary: "#2F8F4E",
   onBrandPrimary: "#FFFFFF",
-  brandSecondary: "#EAB22A",
-  onBrandSecondary: "#1A1308",
-  brandTertiary: "#BDD6C8",
-  onBrandTertiary: "#053F2E",
+  brandSecondary: "#F0C94D",
+  onBrandSecondary: "#173326",
+  brandTertiary: "#DDEEDB",
+  onBrandTertiary: "#1E5A33",
 
   // ---------------------------------------------------------------------------
   // Status
   // ---------------------------------------------------------------------------
-  success: "#036C4E",
+  success: "#2F8F4E",
   onSuccess: "#FFFFFF",
-  warning: "#9A5A08",
+  warning: "#A66B12",
   onWarning: "#FFFFFF",
-  error: "#A51818",
+  error: "#A83A32",
   onError: "#FFFFFF",
-  info: "#2A3B3F",
+  info: "#365A50",
   onInfo: "#FFFFFF",
 
   // ---------------------------------------------------------------------------
   // Lines
   // ---------------------------------------------------------------------------
-  border: "#B8C0AE",
-  borderStrong: "#A0A896",
-  divider: "#C5CDB6",
+  border: "#D8E3D4",
+  borderStrong: "#B8CDB8",
+  divider: "#E5ECE1",
 };
 
 export type ThemeColors = typeof light;

@@ -1,21 +1,19 @@
-import Feather from "@react-native-vector-icons/feather";
 import { Link } from "expo-router";
+
+import { BrandLogo } from "@/src/components/BrandLogo";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { makeStyles, radius, spacing, useTheme } from "@/src/theme";
+import { makeStyles, radius, spacing } from "@/src/theme";
 
 export default function NotFoundScreen() {
   const insets = useSafeAreaInsets();
   const styles = useStyles();
-  const { colors } = useTheme();
 
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
       <View style={styles.card}>
-        <View style={styles.iconWrap}>
-          <Feather name="compass" size={34} color={colors.brandPrimary} />
-        </View>
+        <BrandLogo size="lg" />
         <Text style={styles.title}>Page not found</Text>
         <Text style={styles.sub}>
           The link you followed does not lead anywhere in Come In. Let's take you back home.
@@ -42,15 +40,6 @@ const useStyles = makeStyles((colors) => ({
     alignItems: "center",
     gap: spacing.sm,
     maxWidth: 320,
-  },
-  iconWrap: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: colors.brandTertiary,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: spacing.sm,
   },
   title: {
     fontSize: 20,

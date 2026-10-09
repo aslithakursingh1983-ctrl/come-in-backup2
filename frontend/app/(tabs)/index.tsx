@@ -17,6 +17,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { BrandLogo } from "@/src/components/BrandLogo";
 import { ProductCard } from "@/src/components/ProductCard";
 import {
   CATEGORIES,
@@ -55,22 +56,11 @@ export default function HomeScreen() {
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" />
       {/* Sticky Header */}
-      <LinearGradient
-        colors={["#C7D9CB", "#E8ECE2"]}
+      <View
         style={[styles.header, { paddingTop: insets.top + spacing.sm }]}
       >
         <View style={styles.topRow}>
-          <View style={styles.logoWrap}>
-            <View style={styles.logoBadge}>
-              <Feather name="shopping-bag" size={16} color={colors.onBrandPrimary} />
-            </View>
-            <View>
-              <Text testID="brand-logo" style={styles.brand}>
-                Come In
-              </Text>
-              <Text style={styles.tagline}>{t("brand.tagline")}</Text>
-            </View>
-          </View>
+          <BrandLogo testID="brand-logo" />
         </View>
         <Pressable
           testID="location-selector"
@@ -94,7 +84,7 @@ export default function HomeScreen() {
           <Feather name="search" size={18} color={colors.muted} />
           <Text style={styles.searchPlaceholder}>{t("home.searchPlaceholder")}</Text>
         </Pressable>
-      </LinearGradient>
+      </View>
 
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -109,7 +99,7 @@ export default function HomeScreen() {
               contentFit="cover"
             />
             <LinearGradient
-              colors={["rgba(3,108,78,0.9)", "rgba(3,108,78,0.65)"]}
+              colors={[`${colors.brandForest}E8`, `${colors.brandPrimary}B8`]}
               style={StyleSheet.absoluteFill}
             />
             <View style={styles.heroContent}>
@@ -266,12 +256,13 @@ export default function HomeScreen() {
 function SectionHeader({ title, onSeeAll }: { title: string; onSeeAll?: () => void }) {
   const styles = useStyles();
   const { colors } = useTheme();
+  const { t } = useT();
   return (
     <View style={styles.sectionHeader}>
       <Text style={styles.sectionTitle}>{title}</Text>
       {onSeeAll && (
         <Pressable onPress={onSeeAll} hitSlop={10}>
-          <Text style={[styles.seeAll, { color: colors.brandPrimary }]}>See all</Text>
+          <Text style={[styles.seeAll, { color: colors.brandPrimary }]}>{t("home.seeAll")}</Text>
         </Pressable>
       )}
     </View>
@@ -283,6 +274,7 @@ const useStyles = makeStyles((colors) => ({
   header: {
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.md,
+    backgroundColor: colors.surface,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.border,
   },
@@ -378,7 +370,7 @@ const useStyles = makeStyles((colors) => ({
   },
   heroSub: {
     fontSize: 13,
-    color: "#F0FDF4",
+    color: colors.onBrandPrimary,
     marginTop: 2,
   },
   heroCta: {

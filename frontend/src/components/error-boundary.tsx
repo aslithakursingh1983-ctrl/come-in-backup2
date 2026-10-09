@@ -6,6 +6,7 @@ import { reloadAppAsync } from "expo";
 import { Component, type ErrorInfo, type PropsWithChildren, useState } from "react";
 import { Platform, Pressable, ScrollView, Text, View } from "react-native";
 
+import { BrandMark } from "@/src/components/BrandLogo";
 import { makeStyles } from "@/src/theme";
 
 type ErrorBoundaryState = { error: Error | null };
@@ -49,6 +50,7 @@ function ErrorFallback({ error, resetError }: { error: Error; resetError: () => 
   return (
     <View style={styles.container} testID="error-fallback">
       <View style={styles.content}>
+        <BrandMark size={58} />
         <Text style={styles.title}>Something went wrong</Text>
         <Text style={styles.message}>Please reload the app to continue.</Text>
         {__DEV__ ? <Text style={styles.devMessage}>{error.message}</Text> : null}
