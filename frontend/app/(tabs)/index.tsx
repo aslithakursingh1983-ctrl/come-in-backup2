@@ -116,6 +116,30 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        {/* Shops Near You — Online & Offline */}
+        <SectionHeader
+          title={t("home.shops")}
+          onSeeAll={() => router.push("/shops")}
+        />
+        <View style={styles.requestWrap}>
+          <Pressable
+            testID="browse-shops-card"
+            onPress={() => router.push("/shops")}
+            style={styles.requestCard}
+          >
+            <View style={styles.requestLeft}>
+              <View style={styles.requestIcon}>
+                <Feather name="shopping-bag" size={22} color={colors.onBrandPrimary} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.requestTitle}>{t("home.browseShops")}</Text>
+                <Text style={styles.requestSub}>{t("home.shopsSub")}</Text>
+              </View>
+            </View>
+            <Feather name="arrow-right" size={20} color={colors.brandPrimary} />
+          </Pressable>
+        </View>
+
         {/* Grocery Categories */}
         <SectionHeader title={t("home.shopByCategory")} onSeeAll={() => router.push("/(tabs)/categories")} />
         <FlatList
@@ -163,30 +187,6 @@ export default function HomeScreen() {
               <ProductCard product={p} />
             </View>
           ))}
-        </View>
-
-        {/* Shops Near You */}
-        <SectionHeader
-          title={t("home.shops")}
-          onSeeAll={() => router.push("/shops")}
-        />
-        <View style={styles.requestWrap}>
-          <Pressable
-            testID="browse-shops-card"
-            onPress={() => router.push("/shops")}
-            style={styles.requestCard}
-          >
-            <View style={styles.requestLeft}>
-              <View style={styles.requestIcon}>
-                <Feather name="shopping-bag" size={22} color={colors.onBrandPrimary} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.requestTitle}>{t("home.browseShops")}</Text>
-                <Text style={styles.requestSub}>{t("home.shopsSub")}</Text>
-              </View>
-            </View>
-            <Feather name="arrow-right" size={20} color={colors.brandPrimary} />
-          </Pressable>
         </View>
 
         {/* Home Services */}

@@ -175,3 +175,6 @@
 ##         comment: "Full original horizontal artwork now renders fluidly: width 100% with aspectRatio 3 and per-size maxWidth caps (sm 220 / md 320 / lg 340), contentFit contain, no fixed-height clipping. Verified live: mobile 390px shows 320x106.7 (ratio 3.0, fits with margins, no overlap with location/search), desktop 1920px shows identical ratio. Home topRow changed from flex-row to full-width container. BrandMark/icons unchanged (exact square crop of original mark)."
 ##   - agent: "main"
 ##     message: "Exact original logo artwork is now in the project and visible in the preview. Please regression-test branding visibility plus language switching, cart, navigation, and location persistence."
+##       - working: true
+##         agent: "main"
+##         comment: "URGENT VISIBILITY FIX: shops module was never missing from code; the Home entry sat below the fold (after Popular products) and reopened previews can serve a stale bundle for 20-30s, so the card looked 'gone'. Fix: moved the Shops section to directly under the hero banner and renamed the heading to 'Online & offline shops near you'. Verified live on 390x844: card visible without scrolling, /shops loads 6 rows, Online=3, Offline=4, shop details + Call Shop button work. No backend or translation changes made."

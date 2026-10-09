@@ -70,7 +70,7 @@ export const EN: Translations = {
   "home.quickDelivery": "Quick delivery essentials",
   "home.popular": "Popular this week",
   "home.homeServices": "Home services",
-  "home.shops": "Shops near you",
+  "home.shops": "Online & offline shops near you",
   "home.browseShops": "Browse all shops",
   "home.shopsSub": "Online shops that deliver + local shops to visit",
   "home.requestAnything": "Request anything",
